@@ -38,7 +38,11 @@ def update_cart():
 
     item = request.args.get("item")
 
-    session["cart"][item] += 1
+    if session["cart"].get(item) == None:
+        session["cart"][item] = 1
+    else:
+        session["cart"][item] += 1
+
     session["order_total"] += get_item_price(item)
 
     return jsonify({"cart": session["cart"], "total": session["order_total"]})

@@ -4,18 +4,22 @@ let cart = {};
 let orderTotal = 0;
 
 const addButtons = document.querySelectorAll('.add-to-order');
+// console.log(addButtons)
 for (const button of addButtons) {
   button.addEventListener('click', () => {
     const item = button.id;
 
-    fetch(`/update-cart.json`)
+    fetch(`/update-cart.json?item=${item}`) // = the dict that was returned in the server
       .then((response) => response.json())
       .then((result) => {
+        console.log(result)
         cart = result.cart;
         orderTotal = result.total;
+        displayCart(cart);
+        displayOrderTotal(orderTotal);
       });
-    displayCart(cart);
-    displayOrderTotal(orderTotal);
+
+
   });
 }
 
